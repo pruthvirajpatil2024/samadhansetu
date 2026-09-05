@@ -12,8 +12,10 @@ import {
   GraduationCap,
   Landmark,
   MapPinned,
+  Menu,
   Search,
   Users,
+  X,
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -277,6 +279,7 @@ function App() {
   const [challengeId] = useState('CH-JH-1042')
   const [selectedChallenge, setSelectedChallenge] = useState(challengeCards[0])
   const [workspaceTab, setWorkspaceTab] = useState('Code')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedUniversity, setSelectedUniversity] = useState<(typeof universityDirectory)[number] | null>(null)
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
     Domain: [],
@@ -347,14 +350,19 @@ function App() {
     setCurrentView('detail')
   }
 
+  const handleViewChange = (view: ViewName) => {
+    setCurrentView(view)
+    setMobileMenuOpen(false)
+  }
+
   const renderLanding = () => (
     <>
-      <main className="mx-auto max-w-7xl space-y-16 px-4 py-10 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl space-y-10 px-4 py-8 sm:space-y-16 sm:px-6 sm:py-10 lg:px-8">
         <section>
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-6 flex flex-col gap-2 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Impact</p>
-              <h2 className="mt-2 text-3xl font-bold text-slate-900">Jharkhand map view</h2>
+              <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Jharkhand map view</h2>
             </div>
           </div>
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
@@ -391,7 +399,7 @@ function App() {
         <section>
           <div className="mb-8 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Key features</p>
-            <h2 className="mt-2 text-3xl font-bold text-slate-900">Purpose-built for challenge-to-solution delivery</h2>
+            <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Purpose-built for challenge-to-solution delivery</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {[
@@ -417,12 +425,12 @@ function App() {
 
   const renderSubmit = () => (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Citizen challenge submission</p>
-          <h2 className="mt-2 text-3xl font-bold text-slate-900">Submit a societal challenge</h2>
+          <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Submit a societal challenge</h2>
         </div>
-        <button onClick={() => setCurrentView('landing')} className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700">Back to home</button>
+        <button onClick={() => setCurrentView('landing')} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 sm:w-auto">Back to home</button>
       </div>
 
       <div className="mb-8 grid gap-3 md:grid-cols-4">
@@ -636,12 +644,12 @@ function App() {
 
   const renderExplorer = () => (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Challenge explorer</p>
-          <h2 className="mt-2 text-3xl font-bold text-slate-900">Discover validated societal challenges</h2>
+          <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Discover validated societal challenges</h2>
         </div>
-        <button onClick={() => setCurrentView('submit')} className="rounded-xl bg-sky-700 px-4 py-2.5 text-sm font-semibold text-white">Submit a challenge</button>
+        <button onClick={() => setCurrentView('submit')} className="w-full rounded-xl bg-sky-700 px-4 py-2.5 text-sm font-semibold text-white sm:w-auto">Submit a challenge</button>
       </div>
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
         <aside className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
@@ -716,12 +724,12 @@ function App() {
 
   const renderDetail = () => (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Challenge detail</p>
-          <h2 className="mt-2 text-3xl font-bold text-slate-900">{selectedChallenge.title}</h2>
+          <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">{selectedChallenge.title}</h2>
         </div>
-        <div className="flex gap-3">
+        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <button onClick={() => setCurrentView('explorer')} className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700">Back to explorer</button>
           <button onClick={() => setCurrentView('expert')} className="rounded-xl bg-sky-700 px-4 py-2 text-sm font-semibold text-white">View validation</button>
         </div>
@@ -805,12 +813,12 @@ function App() {
 
   const renderExpert = () => (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Expert validation</p>
-          <h2 className="mt-2 text-3xl font-bold text-slate-900">Challenge awaiting validation</h2>
+          <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Challenge awaiting validation</h2>
         </div>
-        <button onClick={() => setCurrentView('matching')} className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white">Proceed to matching</button>
+        <button onClick={() => setCurrentView('matching')} className="w-full rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white sm:w-auto">Proceed to matching</button>
       </div>
 
       <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm md:p-8">
@@ -874,7 +882,7 @@ function App() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Intelligent university matching</p>
-        <h2 className="mt-2 text-3xl font-bold text-slate-900">Affordable Smart Irrigation for Small Farmers</h2>
+        <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Affordable Smart Irrigation for Small Farmers</h2>
       </div>
 
       <div className="mb-8 rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
@@ -1064,12 +1072,12 @@ function App() {
 
   const renderWorkspace = () => (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Collaboration workspace</p>
-          <h2 className="mt-2 text-3xl font-bold text-slate-900">Solution development workspace</h2>
+          <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Solution development workspace</h2>
         </div>
-        <button onClick={() => setCurrentView('project')} className="rounded-xl bg-sky-700 px-4 py-2 text-sm font-semibold text-white">Project lifecycle</button>
+        <button onClick={() => setCurrentView('project')} className="w-full rounded-xl bg-sky-700 px-4 py-2 text-sm font-semibold text-white sm:w-auto">Project lifecycle</button>
       </div>
 
       <div className="rounded-[28px] border border-slate-200 bg-white shadow-sm">
@@ -1184,10 +1192,10 @@ function App() {
 
   const renderProject = () => (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Project lifecycle</p>
-          <h2 className="mt-2 text-3xl font-bold text-slate-900">From challenge to deployment</h2>
+          <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">From challenge to deployment</h2>
         </div>
         <div className="rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-700">Progress: 68%</div>
       </div>
@@ -1247,7 +1255,7 @@ function App() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Industry partner portal</p>
-        <h2 className="mt-2 text-3xl font-bold text-slate-900">Support scalable, mission-driven innovation</h2>
+        <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Support scalable, mission-driven innovation</h2>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
@@ -1317,7 +1325,7 @@ function App() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Government dashboard</p>
-        <h2 className="mt-2 text-3xl font-bold text-slate-900">Public innovation analytics</h2>
+        <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Public innovation analytics</h2>
       </div>
 
       <div className="grid gap-4 md:grid-cols-5">
@@ -1380,7 +1388,7 @@ function App() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">Impact dashboard</p>
-        <h2 className="mt-2 text-3xl font-bold text-slate-900">Measurable outcomes and social value</h2>
+        <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Measurable outcomes and social value</h2>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
@@ -1468,40 +1476,50 @@ function App() {
       <div className="min-h-screen bg-white">
         <div className="mb-8 border-b border-slate-200 bg-white/90 backdrop-blur-sm">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between gap-4">
-              <button onClick={() => setCurrentView('landing')} className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-700 text-white shadow-sm shadow-sky-200">
-                  <Landmark size={20} />
-                </div>
-                <div>
-                  <div className="text-lg font-bold text-slate-900">SamadhanSetu</div>
-                  <div className="text-[10px] uppercase tracking-[0.22em] text-slate-500">AI-driven innovation</div>
-                </div>
-              </button>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between gap-3">
+                <button onClick={() => handleViewChange('landing')} className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-700 text-white shadow-sm shadow-sky-200">
+                    <Landmark size={20} />
+                  </div>
+                  <div>
+                    <div className="text-lg font-bold text-slate-900">SamadhanSetu</div>
+                    <div className="text-[10px] uppercase tracking-[0.22em] text-slate-500">AI-driven innovation</div>
+                  </div>
+                </button>
 
-              <nav className="hidden items-center gap-5 lg:flex">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <button onClick={handleWorkspaceOpen} className="hidden rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 sm:inline-flex">Workspace</button>
+                  <button onClick={() => handleViewChange('submit')} className="rounded-xl bg-sky-700 px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-sky-200 sm:px-4 sm:py-2.5">Submit</button>
+                  <button
+                    type="button"
+                    onClick={() => setMobileMenuOpen((value) => !value)}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-700 md:hidden"
+                    aria-label="Toggle navigation"
+                  >
+                    {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <nav className={`${mobileMenuOpen ? 'flex' : 'hidden'} flex-col gap-2 border-t border-slate-200 pt-3 md:flex md:flex-row md:items-center md:justify-center md:gap-5 md:border-t-0 md:pt-0`}>
                 {navItems.map((item) => (
                   <button
                     key={item.label}
                     onClick={() => {
-                      if (item.label === 'Home') setCurrentView('landing')
-                      else if (item.label === 'Challenges') setCurrentView('explorer')
-                      else if (item.label === 'Universities') setCurrentView('university')
-                      else if (item.label === 'Industry Partners') setCurrentView('industry')
-                      else if (item.label === 'Impact') setCurrentView('impact')
-                      else setCurrentView('landing')
+                      if (item.label === 'Home') handleViewChange('landing')
+                      else if (item.label === 'Challenges') handleViewChange('explorer')
+                      else if (item.label === 'Universities') handleViewChange('university')
+                      else if (item.label === 'Industry Partners') handleViewChange('industry')
+                      else if (item.label === 'Impact') handleViewChange('impact')
                     }}
-                    className="text-sm font-medium text-slate-600 transition hover:text-sky-700"
+                    className="text-left text-sm font-medium text-slate-600 transition hover:text-sky-700 md:text-center"
                   >
                     {item.label}
                   </button>
                 ))}
+                <button onClick={handleWorkspaceOpen} className="text-left text-sm font-medium text-slate-600 transition hover:text-sky-700 md:hidden">Workspace</button>
               </nav>
-
-              <div className="flex items-center gap-3">
-                <button onClick={handleWorkspaceOpen} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700">Workspace</button>
-                <button onClick={() => setCurrentView('submit')} className="rounded-xl bg-sky-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-sky-200">Submit a Challenge</button>
-              </div>
             </div>
           </div>
         </div>
